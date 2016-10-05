@@ -1,9 +1,15 @@
 language: java
 
+cache:
+  directories:
+  - $HOME/.m2
+
 jdk:
   - openjdk7
   - oraclejdk8
 
 before_script: cd h2
 
-script: ./build.sh jar
+script:
+  - ./build.sh jar testFast
+  - if [ -f error.txt ] ; then echo "Tests Failed:" ; cat error.txt ; exit 1 ; fi
